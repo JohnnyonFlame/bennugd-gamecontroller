@@ -1,7 +1,7 @@
 /*
- *  Copyright © 2006-2012 SplinterGU (Fenix/Bennugd)
- *  Copyright © 2002-2006 Fenix Team (Fenix)
- *  Copyright © 1999-2002 José Luis Cebrián Pagüe (Fenix)
+ *  Copyright ï¿½ 2006-2012 SplinterGU (Fenix/Bennugd)
+ *  Copyright ï¿½ 2002-2006 Fenix Team (Fenix)
+ *  Copyright ï¿½ 1999-2002 Josï¿½ Luis Cebriï¿½n Pagï¿½e (Fenix)
  *
  *  This file is part of Bennu - Game Development
  *
@@ -157,7 +157,7 @@ char * __bgdexport( libvideo, globals_def ) =
 
 DLVARFIXUP __bgdexport( libvideo, globals_fixup )[] =
 {
-    /* Nombre de variable global, puntero al dato, tamaño del elemento, cantidad de elementos */
+    /* Nombre de variable global, puntero al dato, tamaï¿½o del elemento, cantidad de elementos */
     { "graph_mode" , NULL, -1, -1 },
     { "scale_mode" , NULL, -1, -1 },
     { "full_screen" , NULL, -1, -1 },
@@ -273,8 +273,8 @@ int gr_set_mode( int width, int height, int depth )
 {
     int n ;
     int sdl_flags = 0;
-    int surface_width = width;
-    int surface_height = height;
+    int surface_width;
+    int surface_height;
     int texture_depth = 0;
     Uint32 format = 0;
     Uint32 Rmask = 0;
@@ -282,6 +282,20 @@ int gr_set_mode( int width, int height, int depth )
     Uint32 Bmask = 0;
     Uint32 Amask = 0;
     char * e;
+
+    SDL_DisplayMode mode = {};
+    if ((SDL_GetDesktopDisplayMode(1, &mode) != 0)
+        && (SDL_GetDesktopDisplayMode(0, &mode) != 0))
+    {
+        SDL_Log("Unable to query display mode, using defaults.");
+        surface_width = 1920;
+        surface_height = 1080;
+    }
+    else
+    {
+        surface_width = mode.w;
+        surface_height = mode.h;
+    }
 
     SDL_Log("Called set_mode with %dx%dx%d", width, height, depth);
 
@@ -326,7 +340,7 @@ int gr_set_mode( int width, int height, int depth )
         enable_32bits = 1;
     }
 
-    /* Inicializa el modo gráfico */
+    /* Inicializa el modo grï¿½fico */
 
     if ( scrbitmap )
     {
@@ -373,7 +387,7 @@ int gr_set_mode( int width, int height, int depth )
     // Enable SDL scaling, if needed
     if(surface_width != width || surface_height != height) {
         // I should add support for this from BennuGD
-        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");  // make the scaled rendering look smoother.
+        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");  // make the scaled rendering look smoother.
         SDL_RenderSetLogicalSize(renderer, width, height);
     }
 
