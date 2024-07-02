@@ -8,7 +8,7 @@ if (${CMAKE_C_COMPILER_ID} MATCHES "GNU" OR
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu11 -fno-strict-aliasing")
         set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_DEBUG} -g")
         set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} ${CMAKE_C_FLAGS_RELEASE} -O2")
-        set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+        # set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 elseif (MSVC)
         # The following flags disable warnings that suggest to use MSVC-specific functions
         set(CMAKE_C_FLAGS "/wd4996 ${CMAKE_C_FLAGS}" CACHE STRING "" FORCE)
