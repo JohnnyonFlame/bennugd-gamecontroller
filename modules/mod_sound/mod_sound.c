@@ -1,7 +1,7 @@
 /*
- *  Copyright © 2006-2012 SplinterGU (Fenix/Bennugd)
- *  Copyright © 2002-2006 Fenix Team (Fenix)
- *  Copyright © 1999-2002 José Luis Cebrián Pagüe (Fenix)
+ *  Copyright ï¿½ 2006-2012 SplinterGU (Fenix/Bennugd)
+ *  Copyright ï¿½ 2002-2006 Fenix Team (Fenix)
+ *  Copyright ï¿½ 1999-2002 Josï¿½ Luis Cebriï¿½n Pagï¿½e (Fenix)
  *
  *  This file is part of Bennu - Game Development
  *
@@ -83,7 +83,7 @@ char * __bgdexport( mod_sound, globals_def ) =
 
 DLVARFIXUP  __bgdexport( mod_sound, globals_fixup )[] =
 {
-    /* Nombre de variable global, puntero al dato, tamaño del elemento, cantidad de elementos */
+    /* Nombre de variable global, puntero al dato, tamaï¿½o del elemento, cantidad de elementos */
     { "sound_freq", NULL, -1, -1 },
     { "sound_mode", NULL, -1, -1 },
     { "sound_channels", NULL, -1, -1 },
@@ -125,6 +125,11 @@ static int SDLCALL __modsound_close_cb( SDL_RWops *context )
     return( 0 );
 }
 
+static Sint64 SDLCALL __modsound_size_cb( SDL_RWops *context )
+{
+    return (Sint64)file_size( context->hidden.unknown.data1 );
+}
+
 static SDL_RWops *SDL_RWFromBGDFP( file *fp )
 {
     SDL_RWops *rwops = SDL_AllocRW();
@@ -134,6 +139,7 @@ static SDL_RWops *SDL_RWFromBGDFP( file *fp )
         rwops->read = __modsound_read_cb;
         rwops->write = __modsound_write_cb;
         rwops->close = __modsound_close_cb;
+        rwops->size = __modsound_size_cb;
         rwops->hidden.unknown.data1 = fp;
     }
     return( rwops );
@@ -227,7 +233,7 @@ static void sound_close()
 {
     if ( !audio_initialized ) return;
 
-    //falta por comprobar que todo esté descargado
+    //falta por comprobar que todo estï¿½ descargado
 
     Mix_CloseAudio();
 
